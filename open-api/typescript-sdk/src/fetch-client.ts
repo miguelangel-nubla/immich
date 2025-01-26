@@ -243,8 +243,8 @@ export type AssetResponseDto = {
     duplicateId?: string | null;
     duration: string;
     exifInfo?: ExifResponseDto;
-    fileCreatedAt: string | null;
-    fileModifiedAt: string | null;
+    fileCreatedAt: string;
+    fileModifiedAt: string;
     hasMetadata: boolean;
     id: string;
     isArchived: boolean;

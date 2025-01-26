@@ -64,9 +64,9 @@ class AssetResponseDto {
   ///
   ExifResponseDto? exifInfo;
 
-  DateTime? fileCreatedAt;
+  DateTime fileCreatedAt;
 
-  DateTime? fileModifiedAt;
+  DateTime fileModifiedAt;
 
   bool hasMetadata;
 
@@ -174,8 +174,8 @@ class AssetResponseDto {
     (duplicateId == null ? 0 : duplicateId!.hashCode) +
     (duration.hashCode) +
     (exifInfo == null ? 0 : exifInfo!.hashCode) +
-    (fileCreatedAt == null ? 0 : fileCreatedAt!.hashCode) +
-    (fileModifiedAt == null ? 0 : fileModifiedAt!.hashCode) +
+    (fileCreatedAt.hashCode) +
+    (fileModifiedAt.hashCode) +
     (hasMetadata.hashCode) +
     (id.hashCode) +
     (isArchived.hashCode) +
@@ -218,16 +218,8 @@ class AssetResponseDto {
     } else {
     //  json[r'exifInfo'] = null;
     }
-    if (this.fileCreatedAt != null) {
-      json[r'fileCreatedAt'] = this.fileCreatedAt!.toUtc().toIso8601String();
-    } else {
-    //  json[r'fileCreatedAt'] = null;
-    }
-    if (this.fileModifiedAt != null) {
-      json[r'fileModifiedAt'] = this.fileModifiedAt!.toUtc().toIso8601String();
-    } else {
-    //  json[r'fileModifiedAt'] = null;
-    }
+      json[r'fileCreatedAt'] = this.fileCreatedAt.toUtc().toIso8601String();
+      json[r'fileModifiedAt'] = this.fileModifiedAt.toUtc().toIso8601String();
       json[r'hasMetadata'] = this.hasMetadata;
       json[r'id'] = this.id;
       json[r'isArchived'] = this.isArchived;
@@ -300,8 +292,8 @@ class AssetResponseDto {
         duplicateId: mapValueOfType<String>(json, r'duplicateId'),
         duration: mapValueOfType<String>(json, r'duration')!,
         exifInfo: ExifResponseDto.fromJson(json[r'exifInfo']),
-        fileCreatedAt: mapDateTime(json, r'fileCreatedAt', r''),
-        fileModifiedAt: mapDateTime(json, r'fileModifiedAt', r''),
+        fileCreatedAt: mapDateTime(json, r'fileCreatedAt', r'')!,
+        fileModifiedAt: mapDateTime(json, r'fileModifiedAt', r'')!,
         hasMetadata: mapValueOfType<bool>(json, r'hasMetadata')!,
         id: mapValueOfType<String>(json, r'id')!,
         isArchived: mapValueOfType<bool>(json, r'isArchived')!,

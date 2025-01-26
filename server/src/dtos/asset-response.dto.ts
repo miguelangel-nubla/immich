@@ -36,8 +36,8 @@ export class AssetResponseDto extends SanitizedAssetResponseDto {
   libraryId?: string | null;
   originalPath!: string;
   originalFileName!: string;
-  fileCreatedAt!: Date | null;
-  fileModifiedAt!: Date | null;
+  fileCreatedAt!: Date;
+  fileModifiedAt!: Date;
   updatedAt!: Date;
   isFavorite!: boolean;
   isArchived!: boolean;
@@ -125,6 +125,12 @@ export function mapAsset(entity: AssetEntity, options: AssetMapOptions = {}): As
       hasMetadata: false,
     };
     return sanitizedAssetResponse as AssetResponseDto;
+  }
+
+  if (!entity.fileCreatedAt) {
+    throw new Error('fileCreatedAt is required');
+  } else if (!entity.fileModifiedAt) {
+    throw new Error('fileModifiedAt is required');
   }
 
   return {

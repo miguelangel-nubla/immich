@@ -8450,12 +8450,10 @@
           },
           "fileCreatedAt": {
             "format": "date-time",
-            "nullable": true,
             "type": "string"
           },
           "fileModifiedAt": {
             "format": "date-time",
-            "nullable": true,
             "type": "string"
           },
           "hasMetadata": {
