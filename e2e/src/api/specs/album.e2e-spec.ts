@@ -52,7 +52,10 @@ describe('/albums', () => {
     user1Albums = await Promise.all([
       utils.createAlbum(user1.accessToken, {
         albumName: user1SharedEditorUser,
-        albumUsers: [{ userId: user2.userId, role: AlbumUserRole.Editor }],
+        albumUsers: [
+          { userId: admin.userId, role: AlbumUserRole.Editor },
+          { userId: user2.userId, role: AlbumUserRole.Editor },
+        ],
         assetIds: [user1Asset1.id],
       }),
       utils.createAlbum(user1.accessToken, {
@@ -353,6 +356,26 @@ describe('/albums', () => {
       expect(status).toBe(200);
       expect(body).toEqual({
         ...user1Albums[0],
+        assets: [],
+        assetCount: 1,
+        lastModifiedAssetTimestamp: expect.any(String),
+        endDate: expect.any(String),
+        startDate: expect.any(String),
+        albumUsers: expect.any(Array),
+        shared: true,
+      });
+    });
+
+    it('should not count trashed assets', async () => {
+      await utils.deleteAssets(user1.accessToken, [user1Asset2.id]);
+
+      const { status, body } = await request(app)
+        .get(`/albums/${user2Albums[0].id}?withoutAssets=true`)
+        .set('Authorization', `Bearer ${user1.accessToken}`);
+
+      expect(status).toBe(200);
+      expect(body).toEqual({
+        ...user2Albums[0],
         assets: [],
         assetCount: 1,
         lastModifiedAssetTimestamp: expect.any(String),
